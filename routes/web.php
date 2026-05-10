@@ -23,22 +23,9 @@ use App\Http\Controllers\EmpleadoController;
 
 Route::get('/', HomeController::class);
 
-//Agrupar por Controlador
-Route::controller(CursoController::class) -> group(function(){
-    
-    Route::get('cursos', 'index');
-
-    Route::get('cursos/create/{nombre1?}/{nombre2?}', 'create');
-
-    Route::get('cursos/show', 'show');
-
-    Route::get('cursos/gratis/{curso}', 'gratis');
-
-});
-
 Route::controller(EmpleadoController::class) -> group(function(){
 
-    Route::get('empleado/form', 'form');
+    Route::get('empleado/form', 'form') -> name('empleado.form');
 
     Route::post('empleado/form', 'insertar');
 

@@ -2,7 +2,11 @@
 
 @section('title', 'Formulario')
 
+@push('styles')
+    @vite(['resources/css/empleadoform.css']) 
+@endpush
 @section('content')
+    @include('layouts/navUser')
     <main class="container">
         <header class="header">
             <h1>Gestión de Usuarios</h1>
