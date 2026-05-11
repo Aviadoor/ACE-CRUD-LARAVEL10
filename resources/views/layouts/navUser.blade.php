@@ -7,14 +7,16 @@
         <li class="nav-item">
             <a href="/" class="nav-link">Inicio</a>
         </li>
+    @if(session() -> has('user'))
         <li class="nav-item">
             <a href="{{ route('empleado.form') }}" class="nav-link usuarios">Empleado</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link btn-login">Inicio Sesión</a>
+            <a href="{{ route('user.logout') }}" class="nav-link btn-login">Logout</a>
         </li>
+    @else
         <li class="nav-item">
-            <a href="" class="nav-link btn-login">Logout</a>
-        </li>
+            <a href="{{ route('user.login') }}" class="nav-link btn-login">Inicio Sesión</a>
+    @endif
     </ul>
 </nav>

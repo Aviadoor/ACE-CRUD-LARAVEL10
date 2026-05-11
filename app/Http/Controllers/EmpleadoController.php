@@ -19,8 +19,15 @@ class EmpleadoController extends Controller
 
     }    
 
-    public function form()
+    public function form(Request $request)
     {
+
+        if (!(session() -> has('user')))
+        {
+
+            return redirect('/');
+
+        }   
 
         $empleados = Empleado::get();
 
@@ -71,6 +78,13 @@ class EmpleadoController extends Controller
 
     public function form_modificar($id)
     {
+
+        if (!(session() -> has('user')))
+        {
+
+            return redirect('/');
+
+        }
 
         $empleado = Empleado::find($id);
 

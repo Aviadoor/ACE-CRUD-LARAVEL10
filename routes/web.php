@@ -8,6 +8,7 @@ use App\Http\Controllers\CursoController;
 
 use App\Http\Controllers\EmpleadoController;
 
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,22 @@ use App\Http\Controllers\EmpleadoController;
 //Nota: La uri pasada por el usuario sera resuelta de arriba a abajo con la primera aparicion.
 
 Route::get('/', HomeController::class);
+
+
+Route::controller(UserController::class) -> group(function(){
+
+    Route::get('usuario/login', 'form_login') -> name('user.login');
+
+    Route::post('usuario/login', 'login');
+
+    Route::get('usuario/create', 'register_user') -> name('user.register_user');
+
+    Route::post('usuario/create', 'register') -> name('user.register');
+
+    Route::get('usuario/logout', 'logout') -> name('user.logout');
+
+});
+
 
 Route::controller(EmpleadoController::class) -> group(function(){
 
