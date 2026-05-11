@@ -13,7 +13,7 @@
         <!-- Campo de Usuario -->
         <div>
             <label for="usuario">Nombre de usuario:</label><br>
-            <input type="text" id="usuario" name="usuario" required>
+            <input type="text" id="usuario" name="name" required>
         </div>
 
         <br>
@@ -23,7 +23,7 @@
             <label for="password">Contraseña:</label><br>
             <input type="password" id="password" name="password" required>
         </div>
-        <p>No tienes cuenta? <a href="{{ route('user.register_user') }}">Registrar</a></p>
+        <p>No tienes cuenta? <a href="{{ route('user.get_register') }}">Registrar</a></p>
 
         <br>
 

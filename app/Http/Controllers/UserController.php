@@ -20,50 +20,14 @@ class UserController extends Controller
         $this -> UserModel = new User();
     }
 
-    public function form_login(Request $request)
-    {
-
-        return view('user/login');
-
-    }
-
-    public function login(Request $request)
-    {
-
-        $nombre = $request -> usuario;
-
-        $password = $request -> password;
-
-        $usuarios = User::where('name', $nombre)->get();
-
-        foreach ($usuarios as $usuario) {
-
-            if (Hash::check($password, $usuario -> password)) {
-
-                $request -> session() -> put([
-
-                    'user' => $usuario->name,
-
-                    'user_id' => $usuario->id,
-
-                ]);
-
-                return redirect('/');
-            }
-    }
-
-        return redirect('usuario/login');
-
-    }
-
-    public function register_user(Request $request)
+    public function get_register(Request $request)
     {
 
         return view('user/create');
 
     }
 
-    public function register(Request $request)
+    public function post_register(Request $request)
     {
 
         $name = $request -> post('nombre');
@@ -88,15 +52,6 @@ class UserController extends Controller
         }
 
         return redirect('usuario/login');
-
-    }
-
-    public function logout(Request $request)
-    {
-
-        $request -> session() -> invalidate();
-
-        return redirect('/');
 
     }
 

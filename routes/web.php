@@ -9,6 +9,11 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\EmpleadoController;
 
 use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\LoginController;
+use App\Http\Middleware\Authenticate;
+use Illuminate\Session\Middleware\StartSession;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,32 +30,39 @@ use App\Http\Controllers\UserController;
 Route::get('/', HomeController::class);
 
 
-Route::controller(UserController::class) -> group(function(){
+Route::controller(LoginController::class) -> group(function(){
+    
+    Route::get('usuario/login', 'get_login') -> name('user.get_login');
 
-    Route::get('usuario/login', 'form_login') -> name('user.login');
-
-    Route::post('usuario/login', 'login');
-
-    Route::get('usuario/create', 'register_user') -> name('user.register_user');
-
-    Route::post('usuario/create', 'register') -> name('user.register');
+    Route::post('usuario/login', 'post_login') -> name('user.post_login');
 
     Route::get('usuario/logout', 'logout') -> name('user.logout');
-
 });
 
 
-Route::controller(EmpleadoController::class) -> group(function(){
+Route::controller(UserController::class) -> group(function(){
+    
+    Route::get('usuario/register', 'get_register') -> name('user.get_register');
 
-    Route::get('empleado/form', 'form') -> name('empleado.form');
+    Route::post('usuario/register', 'post_register') -> name('user.post_register');
 
-    Route::post('empleado/form', 'insertar');
+});
 
-    Route::delete('empleado/form/{id}', 'eliminar') -> name('empleado.eliminar');
+Route::middleware(['auth']) -> group(function(){
 
-    Route::get('empleado/modificar/{id}', 'form_modificar') -> name('empleado.form.modificar');
-
-    Route::put('empleado/modificar/{id}', 'modificar') -> name('empleado.modificar');
+    Route::controller(EmpleadoController::class) -> group(function(){
+    
+        Route::get('empleado/form', 'form') -> name('empleado.form');
+    
+        Route::post('empleado/form', 'insertar');
+    
+        Route::delete('empleado/form/{id}', 'eliminar') -> name('empleado.eliminar');
+    
+        Route::get('empleado/modificar/{id}', 'form_modificar') -> name('empleado.form.modificar');
+    
+        Route::put('empleado/modificar/{id}', 'modificar') -> name('empleado.modificar');
+    
+    });
 
 });
 
