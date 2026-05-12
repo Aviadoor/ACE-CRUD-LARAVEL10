@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($empleados as $empleado): ?>
+                        @foreach($empleados as $empleado)
                             <tr>
                                 <td>{{$empleado['id']}}</td>
                                 <td><strong>{{$empleado['nombre']}}</strong></td>
@@ -64,7 +64,7 @@
                                     </form>
                                 </td>
                             </tr>
-                        <?php endforeach ?>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -16,12 +16,12 @@ use Illuminate\Session\Middleware\StartSession;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Rutas Web
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Aquí es donde puedes registrar las rutas web para tu aplicación. Estas
+| rutas son cargadas por el RouteServiceProvider y todas ellas serán
+| asignadas al grupo de middleware "web". ¡Haz algo grandioso!
 |
 */
 
