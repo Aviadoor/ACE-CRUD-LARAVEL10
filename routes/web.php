@@ -2,16 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\HomeController;
-
-use App\Http\Controllers\CursoController;
-
 use App\Http\Controllers\EmpleadoController;
 
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\LoginController;
+
 use App\Http\Middleware\Authenticate;
+
 use Illuminate\Session\Middleware\StartSession;
 
 /*
@@ -27,45 +25,71 @@ use Illuminate\Session\Middleware\StartSession;
 
 //Nota: La uri pasada por el usuario sera resuelta de arriba a abajo con la primera aparicion.
 
-Route::get('/', HomeController::class);
+Route::view('/', 'home');
 
 
-Route::controller(LoginController::class) -> group(function(){
-    
-    Route::get('usuario/login', 'get_login') -> name('user.get_login');
+Route::name('user.') -> group(function(){
 
-    Route::post('usuario/login', 'post_login') -> name('user.post_login');
+    Route::prefix('usuario') -> group(function(){
 
-    Route::get('usuario/logout', 'logout') -> name('user.logout');
+        Route::controller(LoginController::class) -> group(function(){
+            
+            Route::get('/login', 'get_login') -> name('get_login');
+        
+            Route::post('/login', 'post_login') -> name('post_login');
+        
+            Route::get('/logout', 'logout') -> name('logout');
+        });
+
+        Route::controller(UserController::class) -> group(function(){
+            
+            Route::get('/register', 'get_register') -> name('get_register');
+        
+            Route::post('/register', 'post_register') -> name('post_register');
+        
+        });
+
+    });
+
 });
 
 
-Route::controller(UserController::class) -> group(function(){
-    
-    Route::get('usuario/register', 'get_register') -> name('user.get_register');
-
-    Route::post('usuario/register', 'post_register') -> name('user.post_register');
-
-});
 
 Route::middleware(['auth']) -> group(function(){
 
     Route::controller(EmpleadoController::class) -> group(function(){
+
+        Route::name('empleado.') -> group(function(){
+
+            Route::prefix('empleado') -> group(function(){
     
-        Route::get('empleado/form', 'form') -> name('empleado.form');
+                Route::get('/form', 'form') -> name('form');
     
-        Route::post('empleado/form', 'insertar');
+                Route::post('/form', 'insertar');
+        
+                Route::delete('/form/{empleado}', 'eliminar') -> name('eliminar');
+        
+                Route::get('/modificar/{empleado}', 'form_modificar') -> name('form.modificar');
+        
+                Route::put('/modificar/{empleado}', 'modificar') -> name('modificar');
     
-        Route::delete('empleado/form/{id}', 'eliminar') -> name('empleado.eliminar');
-    
-        Route::get('empleado/modificar/{id}', 'form_modificar') -> name('empleado.form.modificar');
-    
-        Route::put('empleado/modificar/{id}', 'modificar') -> name('empleado.modificar');
+            });
+            
+        });
     
     });
 
 });
 
+Route::get('regex/{nombrecompleto}', function(string $name){
+    return "Bienvenido $name";
+}) -> where('nombrecompleto', '.*(Diego)$');
+
+Route::fallback(function () {
+
+    return redirect('/');
+
+});
 
 
 /*

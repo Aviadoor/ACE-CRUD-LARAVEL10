@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\View\View;
 
 class EmpleadoController extends Controller
 {
@@ -19,7 +17,7 @@ class EmpleadoController extends Controller
 
     }    
 
-    public function form(Request $request)
+    public function form()
     {
 
         $empleados = Empleado::get();
@@ -60,19 +58,19 @@ class EmpleadoController extends Controller
 
     }
 
-    public function eliminar($id)
+    public function eliminar(Empleado $empleado)
     {
 
-        Empleado::destroy($id);
+        $empleado -> delete();
 
         return redirect('empleado/form');
 
     }
 
-    public function form_modificar($id)
+    public function form_modificar(Empleado $empleado)
     {
 
-        $empleado = Empleado::find($id);
+        //$empleado = Empleado::find($id);
 
         return view('empleados/modificar', [
 
@@ -80,24 +78,16 @@ class EmpleadoController extends Controller
         ]);
 
     }
-    public function modificar(Request $request, $id)
+    public function modificar(Request $request, Empleado $empleado)
     {
-
-        $empleado = Empleado::find($id);
-
-        $nombre = $request -> post('nombre');
-        
-        $correo = $request -> post('correo');
-        
-        $edad = $request -> post('edad');
 
         $empleado -> update([
             
-            "nombre" => $nombre,
+            "nombre" => $request -> post('nombre'),
 
-            "correo" => $correo,
+            "correo" => $request -> post('correo'),
 
-            "edad" => $edad
+            "edad" => $request -> post('edad')
         ]);
 
         return redirect('empleado/form');
